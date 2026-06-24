@@ -1,6 +1,6 @@
-# Ewidencja Czasu Nauki (Study Tracker)
+# Study Tracker
 
-###  [https://study-tracker-vy5d.vercel.app/]
+### https://study-tracker-vy5d.vercel.app/
 
 ---
 
