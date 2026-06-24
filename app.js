@@ -7,7 +7,6 @@ document.getElementById('inputForm').addEventListener('submit', function(e) {
     const inputDate = document.getElementById('entryDate').value;
     const inputHours = parseFloat(document.getElementById('entryHours').value);
     
-    // Walidacja logiczna zakresu godzin: t ∈ ⟨0, 24⟩
     if (isNaN(inputHours) || inputHours < 0 || inputHours > 24) {
         alert("Błąd: Liczba godzin musi wynosić od 0 do 24!");
         return;
@@ -28,7 +27,24 @@ document.getElementById('inputForm').addEventListener('submit', function(e) {
 });
 
 function initApp() {
-    console.log("Baza zwalidowana pomyślnie:", storage);
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    
+    let totalHours = 0;
+    
+    storage.forEach(item => {
+        totalHours += item.hours;
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.date}</td>
+            <td>${item.hours.toFixed(1)} h</td>
+            <td></td>
+        `;
+        tbody.appendChild(tr);
+    });
+    
+    document.getElementById('kpiTotal').innerText = `${totalHours.toFixed(1)} h`;
 }
 
 initApp();
