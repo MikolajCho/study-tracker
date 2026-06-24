@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ewidencja Czasu Nauki</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Ewidencja Czasu Nauki</h1>
+        <p>Analiza realizacji celu dobowego (cel minimalny: 3.0h / dzień).</p>
+    </header>
+
+    <section class="input-panel">
+        <form id="inputForm">
+            <div class="form-group">
+                <label for="entryDate">Data</label>
+                <input type="date" id="entryDate" required>
+            </div>
+            <div class="form-group">
+                <label for="entryHours">Godziny nauki</label>
+                <input type="number" id="entryHours" step="0.1" placeholder="np. 4.5" required>
+            </div>
+            <button type="submit" class="btn-action">Zapisz dzień</button>
+        </form>
+    </section>
+
+    <section class="kpi-row">
+        <div class="kpi-box">
+            <div class="label">Zdeponowany Czas Ogółem</div>
+            <div id="kpiTotal" class="value">0.0 h</div>
+        </div>
+    </section>
+
+    <section class="log-box">
+        <h2>Rejestr Chronologiczny</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Czas nauki</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
