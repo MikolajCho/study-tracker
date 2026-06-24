@@ -20,7 +20,7 @@
 <div class="container">
     <header style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h1>Study Tracker</h1>
+            <h1>EStudy Tracker</h1>
             <p>Analiza realizacji celu dobowego (cel minimalny: 3.0h / dzień).</p>
             <p id="apiQuote" style="color: var(--accent-cyan); font-style: italic; margin-top: 0.5rem; font-size: 0.9rem;">Ładowanie faktu z zewnętrznego serwera...</p>
         </div>
@@ -42,8 +42,8 @@
     </section>
 
     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-        <button class="btn-action" onclick="setFilter('all')">Wszystko</button>
-        <button class="btn-action" onclick="setFilter('week')">Ostatnie 7 dni</button>
+        <button class="btn-filter" id="btnFilterAll" onclick="setFilter('all')">Wszystko</button>
+        <button class="btn-filter" id="btnFilterWeek" onclick="setFilter('week')">Ostatnie 7 dni</button>
     </div>
 
     <section class="kpi-row">
@@ -79,6 +79,7 @@
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
+        <div id="paginationControls" class="pagination-container"></div>
     </section>
 
     <div class="input-panel" style="margin-top: 1.5rem;">
