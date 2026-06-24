@@ -1,7 +1,4 @@
-# Ewidencja Czasu Nauki (Study Tracker)
-
-### 🚀 Wersja produkcyjna online (Deploy): [https://ewidencja-czasu-nauki.vercel.app](https://ewidencja-czasu-nauki.vercel.app)
-### 📂 Repozytorium GitHub: [https://github.com/student71423/study-tracker-analytics](https://github.com/student71423/study-tracker-analytics)
+# Study Tracker
 
 ---
 
