@@ -26,9 +26,24 @@ document.getElementById('inputForm').addEventListener('submit', function(e) {
     initApp();
 });
 
+function removeEntry(date) {
+    if (confirm(`Czy na pewno chcesz usunąć wpis z dnia ${date}?`)) {
+        storage = storage.filter(item => item.date !== date);
+        localStorage.setItem('study_db', JSON.stringify(storage));
+        initApp();
+    }
+}
+
 function initApp() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
+    
+    // Obsługa pustego stanu bazy danych
+    if (storage.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Brak danych w bazie. Wprowadź pierwszy dzień.</td></tr>`;
+        document.getElementById('kpiTotal').innerText = '0.0 h';
+        return;
+    }
     
     let totalHours = 0;
     
@@ -39,7 +54,7 @@ function initApp() {
         tr.innerHTML = `
             <td>${item.date}</td>
             <td>${item.hours.toFixed(1)} h</td>
-            <td></td>
+            <td><button style="color: var(--accent-red); background: none; border: none; cursor: pointer; font-weight: 600;" onclick="removeEntry('${item.date}')">Usuń</button></td>
         `;
         tbody.appendChild(tr);
     });
@@ -47,4 +62,5 @@ function initApp() {
     document.getElementById('kpiTotal').innerText = `${totalHours.toFixed(1)} h`;
 }
 
+window.removeEntry = removeEntry;
 initApp();
