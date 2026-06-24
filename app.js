@@ -37,7 +37,6 @@ function removeEntry(date) {
     }
 }
 
-// Sprawdzanie czy dwa ostatnie chronologicznie wpisy mają przypisane 0 godzin nauki
 function checkRegression() {
     if (storage.length < 2) return;
     const last = storage[storage.length - 1];
@@ -63,7 +62,7 @@ function playSiren() {
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + 1.2);
     } catch(e) {
-        console.log("Audio zablokowane - polityka autoplay przeglądarki.");
+        console.log("Audio zablokowane.");
     }
 }
 
@@ -76,7 +75,6 @@ function setFilter(filterType) {
     initApp();
 }
 
-// Filtrowanie tablicy obiektów
 function filterData(dataArray) {
     if (currentFilter === 'all') return dataArray;
     const cutoffDate = new Date();
@@ -114,6 +112,43 @@ function renderChart(data) {
             }
         }
     });
+}
+
+function exportJSON() {
+    if (storage.length === 0) {
+        alert("Baza danych jest pusta.");
+        return;
+    }
+    const blob = new Blob([JSON.stringify(storage, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'kopia_bezpieczeństwa_nauki.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsedData = JSON.parse(e.target.result);
+            if (Array.isArray(parsedData)) {
+                storage = parsedData;
+                localStorage.setItem('study_db', JSON.stringify(storage));
+                initApp();
+                alert("Baza danych została pomyślnie zaimportowana!");
+            } else {
+                alert("Nieprawidłowy format pliku JSON.");
+            }
+        } catch(err) {
+            alert("Błąd podczas odczytu pliku kopii zapasowej.");
+        }
+    };
+    reader.readAsText(file);
 }
 
 function initApp() {
@@ -159,4 +194,6 @@ function initApp() {
 window.removeEntry = removeEntry;
 window.setFilter = setFilter;
 window.closeModal = closeModal;
+window.exportJSON = exportJSON;
+window.importJSON = importJSON;
 initApp();
