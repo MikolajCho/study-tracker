@@ -1,6 +1,7 @@
 let storage = JSON.parse(localStorage.getItem('study_db')) || [];
 document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
 let currentFilter = 'all';
+let chartInstance = null;
 
 document.getElementById('inputForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -47,6 +48,39 @@ function filterData(dataArray) {
     return dataArray.filter(item => new Date(item.date) >= cutoffDate);
 }
 
+function renderChart(data) {
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+    
+    const ctx = document.getElementById('deviationChart').getContext('2d');
+    const labels = data.map(item => item.date);
+    const chartData = data.map(item => item.hours - 3.0);
+    
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Odchylenie od normy dobowej (Cel 3h)',
+                data: chartData,
+                borderColor: '#00d2d3',
+                backgroundColor: 'transparent',
+                borderWidth: 3,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: '#2c3444' } },
+                x: { grid: { color: '#2c3444' } }
+            }
+        }
+    });
+}
+
 function initApp() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
@@ -58,6 +92,7 @@ function initApp() {
         document.getElementById('kpiTotal').innerText = '0.0 h';
         document.getElementById('kpiNet').innerText = '0.0 h';
         document.getElementById('kpiAvg').innerText = '0.00 h';
+        if (chartInstance) chartInstance.destroy();
         return;
     }
     
@@ -82,6 +117,8 @@ function initApp() {
     document.getElementById('kpiNet').innerText = `${netBalance >= 0 ? '+' : ''}${netBalance.toFixed(1)} h`;
     document.getElementById('kpiNet').style.color = netBalance >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
     document.getElementById('kpiAvg').innerText = `${averageHours.toFixed(2)} h`;
+    
+    renderChart(activeData);
 }
 
 window.removeEntry = removeEntry;
