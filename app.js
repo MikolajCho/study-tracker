@@ -33,14 +33,16 @@ function toggleTheme() {
 // ----- Zewnętrzne API: ciekawostka w nagłówku -----
 // Pokazuje, że potrafimy pobrać dane z zewnętrznego serwera (fetch + async).
 function loadQuote() {
-    fetch('https://api.adviceslip.com/advice')
+    // Losowy artykuł z polskiej Wikipedii (zewnętrzne API, dane po polsku).
+    fetch('https://pl.wikipedia.org/api/rest_v1/page/random/summary')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('apiQuote').innerText = '💡 ' + data.slip.advice;
+            const text = data.extract || data.title;
+            document.getElementById('apiQuote').innerText = '📚 ' + data.title + ': ' + text;
         })
         .catch(() => {
             // Gdy API nie odpowie, pokazujemy tekst zastępczy (obsługa błędu).
-            document.getElementById('apiQuote').innerText = 'Nie udało się pobrać porady.';
+            document.getElementById('apiQuote').innerText = 'Nie udało się pobrać ciekawostki.';
         });
 }
 

@@ -29,7 +29,7 @@ wynik z założonym celem 3 godzin dziennie.
 - **CSS3** – stylowanie, Flexbox i Grid, responsywność, tryb jasny/ciemny
 - **JavaScript (ES6)** – logika aplikacji, walidacja, obsługa zdarzeń
 - **Chart.js** – wykres godzin nauki
-- **Advice Slip API** – zewnętrzne API z poradami (fetch)
+- **Wikipedia REST API** – losowa ciekawostka z polskiej Wikipedii (fetch)
 - **localStorage** – zapis danych w przeglądarce
 - **Vercel** – hosting wersji online
 
