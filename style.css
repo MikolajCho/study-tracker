@@ -49,18 +49,20 @@ body {
     align-items: flex-start;
     border-bottom: 1px solid var(--border);
     padding-bottom: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 1rem;
 }
 
-/* Lewa część nagłówka zajmuje wolne miejsce, ale nie rozpycha przycisku */
+/* Lewa część zwęża się i zawija tekst, zamiast spychać przycisk na dół */
 .app-header > div {
     flex: 1;
-    min-width: 260px;
+    min-width: 0;
 }
 
+/* Przycisk motywu nigdy się nie kurczy i zostaje w prawym górnym rogu */
 #themeBtn {
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 h1 {
